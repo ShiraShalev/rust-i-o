@@ -1,4 +1,5 @@
 use std::env;
+use std::error::Error;
 
 pub struct Config {
     pub query: String,
@@ -7,11 +8,11 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
+    pub fn build(args: &[String]) -> Result<Config, Box<dyn Error>> {
         if args.len() < 3 {
-            return Err("Not enough arguments");
+            return Err("Not enough arguments".into());
         } else if args.len() > 3 {
-            return Err("Unknown argument provided");
+            return Err("Unknown argument provided".into());
         }
 
         let query = args[1].clone();
